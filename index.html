@@ -6,30 +6,6 @@
     <title>Happy Birthday Beautiful! 🎉</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Preload all images and videos for best upfront loading -->
-    <link rel="preload" as="image" href="assets/pragya-stickervali.jpg">
-    <link rel="preload" as="image" href="assets/pragya-laaljagah.jpg">
-    <link rel="preload" as="image" href="assets/pragya-nilitopi.jpg">
-    <link rel="preload" as="image" href="assets/pragya-fest2.jpg">
-    <link rel="preload" as="image" href="assets/pragya-firsechorii.png">
-    <link rel="preload" as="image" href="assets/pragya-firsechori.png">
-    <link rel="preload" as="image" href="assets/pragya-doorhairandom.jpg">
-    <link rel="preload" as="image" href="assets/pragya-dikhniri.jpg">
-    <link rel="preload" as="image" href="assets/pragya-cutieee.jpg">
-    <link rel="preload" as="image" href="assets/pragya-fest.jpg">
-    <link rel="preload" as="image" href="assets/pragya-rude.jpg">
-    <link rel="preload" as="image" href="assets/pragya-college2.jpg">
-    <link rel="preload" as="image" href="assets/pragya-college.jpg">
-    <link rel="preload" as="image" href="assets/pragya-random.jpg">
-    <link rel="preload" as="image" href="assets/pragya-smarty.jpg">
-    <link rel="preload" as="image" href="assets/pragya-gobhi.jpg">
-    <link rel="preload" as="image" href="assets/pragya-illegal-pic.jpeg">
-    <link rel="preload" as="image" href="assets/pragya-thief.jpeg">
-    <link rel="preload" as="image" href="assets/pragya-sooot.jpg">
-    <link rel="preload" as="image" href="assets/Screenshot_2025-06-01-22-04-15-133_com.google.android.apps.photos.jpg">
-    <link rel="preload" as="video" href="assets/pragya-bangles.mp4" type="video/mp4">
-    <link rel="preload" as="video" href="assets/pragya-attitude.mp4" type="video/mp4">
-    <link rel="preload" as="video" href="assets/pragya-navishka-cut.mp4" type="video/mp4">
     <style>
         * {
             margin: 0;
@@ -852,8 +828,7 @@
         <button id="skipLoadingBtn" class="skip-loading-btn" type="button">Skip</button>
         <div class="loading-videos-bg">
             <img id="loadingBgImage" class="loading-bg-image" src="assets/pragya-sooot.jpg" style="display:none;" />
-            <video id="loadingBgVideoA" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
-            <video id="loadingBgVideoB" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
+            <video id="loadingBgVideo" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
         </div>
         <div id="loadingMessage">Getting the party ready...</div>
         <div class="loading-progress-bar-bg">
@@ -1137,22 +1112,18 @@
             const loadingScreen = document.getElementById('loadingScreen');
             const progressBar = document.getElementById('loadingProgressBar');
             const bgImage = document.getElementById('loadingBgImage');
-            const videoA = document.getElementById('loadingBgVideoA');
-            const videoB = document.getElementById('loadingBgVideoB');
+            const bgVideo = document.getElementById('loadingBgVideo');
             let current = -1; // -1 means show image
             let loadingDone = false;
             let start = null;
-            // Set total loading time: 3s for image + 9s for each of the 3 videos, played twice = 21s
             const maxTime = 21000;
             let progressTimeout = null;
-            let activeVideo = videoA, preloadVideo = videoB;
             function showImageThenVideos() {
                 bgImage.style.display = '';
-                videoA.style.display = 'none';
-                videoB.style.display = 'none';
+                bgVideo.style.display = 'none';
                 // Preload the first video while image is showing
-                videoA.src = playlist[0];
-                videoA.load();
+                bgVideo.src = playlist[0];
+                bgVideo.load();
                 setTimeout(() => {
                     current = 0;
                     playNextVideo();
@@ -1163,43 +1134,42 @@
                     finishLoading();
                     return;
                 }
-                [activeVideo, preloadVideo] = [preloadVideo, activeVideo];
-                // Only set src/load if not already preloaded
-                if (!(current === 0 && activeVideo === videoA)) {
-                    activeVideo.src = playlist[current];
-                    activeVideo.load();
-                }
-                activeVideo.style.display = '';
+                // Set src and load for the current video
+                bgVideo.src = playlist[current];
+                bgVideo.load();
+                bgVideo.style.display = '';
                 // Keep image visible until video is ready to display (canplay)
                 if (current === 0) {
                     bgImage.style.display = '';
                     let hideImg = function() {
                         bgImage.style.display = 'none';
-                        activeVideo.removeEventListener('canplay', hideImg);
+                        bgVideo.removeEventListener('canplay', hideImg);
                     };
-                    activeVideo.addEventListener('canplay', hideImg);
+                    bgVideo.addEventListener('canplay', hideImg);
                     // Fallback: hide image after 2s if video never becomes ready
                     setTimeout(() => { bgImage.style.display = 'none'; }, 2000);
                 } else {
                     bgImage.style.display = 'none';
                 }
-                preloadVideo.style.display = 'none';
-                // Preload next video if any
-                if (current + 1 < playlist.length) {
-                    preloadVideo.src = playlist[current + 1];
-                    preloadVideo.load();
-                }
-                // Play and handle end
-                activeVideo.play().catch(() => {
-                    current++;
-                    playNextVideo();
-                });
-                activeVideo.onended = function() {
+                // Play and handle end, with robust error handling
+                let errorOrStall = false;
+                let errorHandler = () => {
+                    if (!errorOrStall) {
+                        errorOrStall = true;
+                        current++;
+                        playNextVideo();
+                    }
+                };
+                bgVideo.onerror = errorHandler;
+                bgVideo.onstalled = errorHandler;
+                bgVideo.onabort = errorHandler;
+                bgVideo.play().catch(errorHandler);
+                bgVideo.onended = function() {
                     current++;
                     playNextVideo();
                 };
                 // Fallback: skip to next after 9s per video
-                activeVideo.onloadedmetadata = function() {
+                bgVideo.onloadedmetadata = function() {
                     if (progressTimeout) clearTimeout(progressTimeout);
                     progressTimeout = setTimeout(() => {
                         current++;
@@ -1227,15 +1197,13 @@
             requestAnimationFrame(animateBar);
             showImageThenVideos();
             setTimeout(finishLoading, maxTime);
-
             // Skip button logic
             const skipBtn = document.getElementById('skipLoadingBtn');
             skipBtn.onclick = function() {
                 finishLoading();
             };
-            // Make sure skip button is only visible while loading
             setTimeout(() => { if (!loadingDone) skipBtn.style.display = 'none'; }, maxTime + 1500);
-
+            // Loading message change after 2s
             setTimeout(() => {
                 const msg = document.getElementById('loadingMessage');
                 if (msg) msg.textContent = 'Kabada laptop , GAREEEEEB'
@@ -1279,20 +1247,8 @@
     function renderAmazingCards() {
         const grid = document.querySelector('.amazing-grid');
         grid.innerHTML = '';
-        // Swap 1st and 5th images
         for (let i = 0; i < 8; i++) {
-            let img;
-            if (i === 0) {
-                img = 'assets/pragya-firsechorii.png';
-            } else if (i === 4) {
-                img = 'assets/pragya-stickervali.jpg';
-            } else {
-                // Adjust index to skip the swapped images
-                let idx = i*2 % amazingImages.length;
-                if (i > 0 && idx === amazingImages.indexOf('assets/pragya-firsechorii.png')) idx = 0;
-                if (i > 4 && idx === amazingImages.indexOf('assets/pragya-stickervali.jpg')) idx = 4*2 % amazingImages.length;
-                img = amazingImages[idx];
-            }
+            const img = amazingImages[i*2 % amazingImages.length];
             const card = document.createElement('div');
             card.className = 'amazing-card';
             card.innerHTML = `<img src="${img}" alt="" />`;
