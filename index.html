@@ -1220,7 +1220,6 @@
         { short: 'Your Strength', long: 'No matter what life throws at you, you handle it with grace and strength. I wish you heal from the things you went through' },
         { short: 'Your Energy', long: 'Your energy is infectious and makes every moment more fun and memorable.TBH you are lazy you cant do anything' },
         { short: 'Your Wisdom', long: 'WISDOM?? SERIOUSLY YOU WANT TO READ ABOUT YOUR WISDOM?? YOU ARE DUMB AF YOUU SOO CLUMSYY YWWWR' },
-        { short: 'Your Behaviour', long: 'C-L-U-M-S-Y , chantt, boht tej , you aint' }
     ];
     // 18 images (front/back), skipping sooot, screenshot, small-cake
     const amazingImages = [
@@ -1229,7 +1228,6 @@
         'assets/pragya-nilitopi.jpg',
         'assets/pragya-fest2.jpg',
         'assets/pragya-firsechorii.png',
-        'assets/pragya-firsechori.png',
         'assets/pragya-doorhairandom.jpg',
         'assets/pragya-dikhniri.jpg',
         'assets/pragya-cutieee.jpg',
@@ -1239,19 +1237,18 @@
         'assets/pragya-college.jpg',
         'assets/pragya-random.jpg',
         'assets/pragya-smarty.jpg',
-        'assets/pragya-gobhi.jpg',
         'assets/pragya-illegal-pic.jpeg',
-        'assets/pragya-thief.jpeg'
+        'assets/pragya-gobhi.jpg',  
     ];
     // Render cards
     function renderAmazingCards() {
         const grid = document.querySelector('.amazing-grid');
         grid.innerHTML = '';
         for (let i = 0; i < 8; i++) {
-            const img = amazingImages[i*2 % amazingImages.length];
+            const frontImg = amazingImages[i];
             const card = document.createElement('div');
             card.className = 'amazing-card';
-            card.innerHTML = `<img src="${img}" alt="" />`;
+            card.innerHTML = `<img src="${frontImg}" alt="" />`;
             card.onclick = () => showAmazingModal(i);
             grid.appendChild(card);
         }
@@ -1261,7 +1258,9 @@
     function showAmazingModal(idx) {
         amazingModalOpen = true;
         const modal = document.getElementById('amazing-modal');
-        document.getElementById('amazing-modal-img').src = amazingImages[(idx*2+1)%amazingImages.length];
+        // Use the next 8 images for modal backs, or repeat if not enough
+        const backImg = amazingImages[8 + idx] || amazingImages[idx];
+        document.getElementById('amazing-modal-img').src = backImg;
         document.getElementById('amazing-modal-title').textContent = amazingCards[idx].short;
         document.getElementById('amazing-modal-text').textContent = amazingCards[idx].long;
         modal.style.display = 'flex';
