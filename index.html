@@ -6,6 +6,30 @@
     <title>Happy Birthday Beautiful! 🎉</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Preload all images and videos for best upfront loading -->
+    <link rel="preload" as="image" href="assets/pragya-stickervali.jpg">
+    <link rel="preload" as="image" href="assets/pragya-laaljagah.jpg">
+    <link rel="preload" as="image" href="assets/pragya-nilitopi.jpg">
+    <link rel="preload" as="image" href="assets/pragya-fest2.jpg">
+    <link rel="preload" as="image" href="assets/pragya-firsechorii.png">
+    <link rel="preload" as="image" href="assets/pragya-firsechori.png">
+    <link rel="preload" as="image" href="assets/pragya-doorhairandom.jpg">
+    <link rel="preload" as="image" href="assets/pragya-dikhniri.jpg">
+    <link rel="preload" as="image" href="assets/pragya-cutieee.jpg">
+    <link rel="preload" as="image" href="assets/pragya-fest.jpg">
+    <link rel="preload" as="image" href="assets/pragya-rude.jpg">
+    <link rel="preload" as="image" href="assets/pragya-college2.jpg">
+    <link rel="preload" as="image" href="assets/pragya-college.jpg">
+    <link rel="preload" as="image" href="assets/pragya-random.jpg">
+    <link rel="preload" as="image" href="assets/pragya-smarty.jpg">
+    <link rel="preload" as="image" href="assets/pragya-gobhi.jpg">
+    <link rel="preload" as="image" href="assets/pragya-illegal-pic.jpeg">
+    <link rel="preload" as="image" href="assets/pragya-thief.jpeg">
+    <link rel="preload" as="image" href="assets/pragya-sooot.jpg">
+    <link rel="preload" as="image" href="assets/Screenshot_2025-06-01-22-04-15-133_com.google.android.apps.photos.jpg">
+    <link rel="preload" as="video" href="assets/pragya-bangles.mp4" type="video/mp4">
+    <link rel="preload" as="video" href="assets/pragya-attitude.mp4" type="video/mp4">
+    <link rel="preload" as="video" href="assets/pragya-navishka-cut.mp4" type="video/mp4">
     <style>
         * {
             margin: 0;
@@ -602,12 +626,6 @@
     <header>
         <nav class="container">
             <div class="logo">💅 Slay Gurl 💅</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#amazing">DUMP</a></li>
-                <li><a href="#wishes">Wishes</a></li>
-                <li><a href="#celebrate">Celebrate</a></li>
-            </ul>
         </nav>
     </header>
 
@@ -625,10 +643,10 @@
 
     <section id="amazing" class="memories">
         <div class="container">
-            <h2>What Makes You Amazing ✨</h2>
+            <h2> ✨</h2>
             <div class="amazing-grid">
                 <!-- 9 cards, each with front/back images and text -->
-            </div>
+                </div>
             <div id="amazing-modal" class="amazing-modal" style="display:none;">
                 <div class="amazing-modal-content">
                     <button class="amazing-modal-close" onclick="closeAmazingModal()">&times;</button>
@@ -642,7 +660,7 @@
 
     <section id="wishes" class="wishes">
         <div class="container">
-            <h2>Birthday Wishes 🎁</h2>
+            <h2></h2>
             <div class="wish-container">
                 <div class="birthday-wish">
                     <div class="quote">"May your birthday be the start of a year filled with good luck, good health, and much happiness." 🍀</div>
@@ -669,8 +687,8 @@
             <div class="footer-message">
                 Wishing you the happiest of birthdays! 🎉
             </div>
-            <div class="hearts">💕 💖 💕 💖 💕</div>
-            <p>WObviosuly yaar made with love</p>
+            <div class="hearts"></div>
+            <p>Obviosuly yaar made with love</p>
         </div>
     </footer>
 
@@ -834,8 +852,8 @@
         <button id="skipLoadingBtn" class="skip-loading-btn" type="button">Skip</button>
         <div class="loading-videos-bg">
             <img id="loadingBgImage" class="loading-bg-image" src="assets/pragya-sooot.jpg" style="display:none;" />
-            <video id="loadingBgVideoA" class="loading-bg-video" muted playsinline style="display:none;"></video>
-            <video id="loadingBgVideoB" class="loading-bg-video" muted playsinline style="display:none;"></video>
+            <video id="loadingBgVideoA" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
+            <video id="loadingBgVideoB" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
         </div>
         <div id="loadingMessage">Getting the party ready...</div>
         <div class="loading-progress-bar-bg">
@@ -1132,8 +1150,10 @@
                 bgImage.style.display = '';
                 videoA.style.display = 'none';
                 videoB.style.display = 'none';
+                // Preload the first video while image is showing
+                videoA.src = playlist[0];
+                videoA.load();
                 setTimeout(() => {
-                    bgImage.style.display = 'none';
                     current = 0;
                     playNextVideo();
                 }, 3000); // 3s for image
@@ -1144,9 +1164,25 @@
                     return;
                 }
                 [activeVideo, preloadVideo] = [preloadVideo, activeVideo];
-                activeVideo.src = playlist[current];
-                activeVideo.load();
+                // Only set src/load if not already preloaded
+                if (!(current === 0 && activeVideo === videoA)) {
+                    activeVideo.src = playlist[current];
+                    activeVideo.load();
+                }
                 activeVideo.style.display = '';
+                // Keep image visible until video is ready to display (canplay)
+                if (current === 0) {
+                    bgImage.style.display = '';
+                    let hideImg = function() {
+                        bgImage.style.display = 'none';
+                        activeVideo.removeEventListener('canplay', hideImg);
+                    };
+                    activeVideo.addEventListener('canplay', hideImg);
+                    // Fallback: hide image after 2s if video never becomes ready
+                    setTimeout(() => { bgImage.style.display = 'none'; }, 2000);
+                } else {
+                    bgImage.style.display = 'none';
+                }
                 preloadVideo.style.display = 'none';
                 // Preload next video if any
                 if (current + 1 < playlist.length) {
@@ -1243,8 +1279,20 @@
     function renderAmazingCards() {
         const grid = document.querySelector('.amazing-grid');
         grid.innerHTML = '';
+        // Swap 1st and 5th images
         for (let i = 0; i < 8; i++) {
-            const img = amazingImages[i*2 % amazingImages.length];
+            let img;
+            if (i === 0) {
+                img = 'assets/pragya-firsechorii.png';
+            } else if (i === 4) {
+                img = 'assets/pragya-stickervali.jpg';
+            } else {
+                // Adjust index to skip the swapped images
+                let idx = i*2 % amazingImages.length;
+                if (i > 0 && idx === amazingImages.indexOf('assets/pragya-firsechorii.png')) idx = 0;
+                if (i > 4 && idx === amazingImages.indexOf('assets/pragya-stickervali.jpg')) idx = 4*2 % amazingImages.length;
+                img = amazingImages[idx];
+            }
             const card = document.createElement('div');
             card.className = 'amazing-card';
             card.innerHTML = `<img src="${img}" alt="" />`;
