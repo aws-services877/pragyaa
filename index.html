@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Pragya!! 🎉</title>
+    <title>Happy Birthday Beautiful! 🎉</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -155,13 +155,16 @@
             z-index: 2;
         }
         .hero-content {
-            background: linear-gradient(120deg, #fbc2ebcc 0%, #a1c4fdcc 100%);
+            background: url('assets/Screenshot_2025-06-01-22-04-15-133_com.google.android.apps.photos.jpg') center center/cover no-repeat;
             backdrop-filter: blur(12px);
             padding: 70px 40px 60px 40px;
             border-radius: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.13);
             border: 3px solid #fbc2eb88;
             animation: fadeIn 1.5s cubic-bezier(.39,.575,.56,1.000) both;
+        }
+        .hero-content h1, .hero-content .subtitle {
+            text-shadow: 0 2px 12px #000a, 0 0 2px #fff8;
         }
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(40px); }
@@ -548,7 +551,27 @@
             box-shadow: 0 12px 40px #a1c4fd55;
         }
         .amazing-card-label {
-            display: none;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            min-height: 54px;
+            background: linear-gradient(0deg, #111a2fcc 90%, transparent 100%);
+            color: #fff;
+            font-family: 'Quicksand', Arial, sans-serif;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 18px 0 12px 0;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            pointer-events: none;
+            display: block;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
         }
         /* Modal styles */
         .amazing-modal {
@@ -827,10 +850,9 @@
     <div class="loading-screen" id="loadingScreen">
         <button id="skipLoadingBtn" class="skip-loading-btn" type="button">Skip</button>
         <div class="loading-videos-bg">
-            <img id="loadingBgImage" class="loading-bg-image" src="assets/pragya-sooot.jpg" style="display:none;" />
-            <video id="loadingBgVideo" class="loading-bg-video" muted playsinline preload="auto" style="display:none;"></video>
+            <video id="loadingBgVideo" class="loading-bg-video" muted playsinline autoplay preload="auto"></video>
         </div>
-        <div id="loadingMessage">Getting the party ready...</div>
+        <div id="loadingMessage">Loading YOU...</div>
         <div class="loading-progress-bar-bg">
             <div class="loading-progress-bar" id="loadingProgressBar"></div>
         </div>
@@ -1094,87 +1116,41 @@
 
         // Seamless video transitions with preloading
         (function() {
-            const videoFiles = [
-                'assets/pragya-bangles.mp4',
-                'assets/pragya-attitude.mp4',
-                'assets/pragya-navishka-cut.mp4'
-            ];
-            function shuffle(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
-            const shuffled1 = shuffle(videoFiles.slice());
-            const shuffled2 = shuffle(videoFiles.slice());
-            const playlist = shuffled1.concat(shuffled2); // Each video twice, random order
+            const videoFile = 'assets/combined.mp4'; // Only one video now
             const loadingScreen = document.getElementById('loadingScreen');
             const progressBar = document.getElementById('loadingProgressBar');
-            const bgImage = document.getElementById('loadingBgImage');
             const bgVideo = document.getElementById('loadingBgVideo');
-            let current = -1; // -1 means show image
             let loadingDone = false;
             let start = null;
-            const maxTime = 21000;
+            const maxTime = 25000; // 25 seconds
             let progressTimeout = null;
-            function showImageThenVideos() {
-                bgImage.style.display = '';
-                bgVideo.style.display = 'none';
-                // Preload the first video while image is showing
-                bgVideo.src = playlist[0];
-                bgVideo.load();
-                setTimeout(() => {
-                    current = 0;
-                    playNextVideo();
-                }, 3000); // 3s for image
-            }
-            function playNextVideo() {
-                if (current >= playlist.length) {
-                    finishLoading();
-                    return;
-                }
-                // Set src and load for the current video
-                bgVideo.src = playlist[current];
+            function playVideo() {
+                bgVideo.src = videoFile;
                 bgVideo.load();
                 bgVideo.style.display = '';
-                // Keep image visible until video is ready to display (canplay)
-                if (current === 0) {
-                    bgImage.style.display = '';
-                    let hideImg = function() {
-                        bgImage.style.display = 'none';
-                        bgVideo.removeEventListener('canplay', hideImg);
-                    };
-                    bgVideo.addEventListener('canplay', hideImg);
-                    // Fallback: hide image after 2s if video never becomes ready
-                    setTimeout(() => { bgImage.style.display = 'none'; }, 2000);
-                } else {
-                    bgImage.style.display = 'none';
-                }
+                bgVideo.muted = true;
+                bgVideo.autoplay = true;
                 // Play and handle end, with robust error handling
                 let errorOrStall = false;
                 let errorHandler = () => {
                     if (!errorOrStall) {
                         errorOrStall = true;
-                        current++;
-                        playNextVideo();
+                        finishLoading();
                     }
                 };
                 bgVideo.onerror = errorHandler;
                 bgVideo.onstalled = errorHandler;
                 bgVideo.onabort = errorHandler;
                 bgVideo.play().catch(errorHandler);
-                bgVideo.onended = function() {
-                    current++;
-                    playNextVideo();
-                };
-                // Fallback: skip to next after 9s per video
+                // Fallback: finish loading after 25s
                 bgVideo.onloadedmetadata = function() {
                     if (progressTimeout) clearTimeout(progressTimeout);
                     progressTimeout = setTimeout(() => {
-                        current++;
-                        playNextVideo();
-                    }, 9000);
+                        finishLoading();
+                    }, maxTime);
+                };
+                bgVideo.onended = function() {
+                    finishLoading();
                 };
             }
             function finishLoading() {
@@ -1195,7 +1171,7 @@
                 }
             }
             requestAnimationFrame(animateBar);
-            showImageThenVideos();
+            playVideo();
             setTimeout(finishLoading, maxTime);
             // Skip button logic
             const skipBtn = document.getElementById('skipLoadingBtn');
@@ -1207,7 +1183,7 @@
             setTimeout(() => {
                 const msg = document.getElementById('loadingMessage');
                 if (msg) msg.textContent = 'Kabada laptop , GAREEEEEB'
-            }, 2000);
+            }, 6000);
         })();
 
     // Amazing section card data
@@ -1248,7 +1224,8 @@
             const frontImg = amazingImages[i];
             const card = document.createElement('div');
             card.className = 'amazing-card';
-            card.innerHTML = `<img src="${frontImg}" alt="" />`;
+            // Use amazingCards[i].short for both the card label and modal title
+            card.innerHTML = `<img src="${frontImg}" alt="" />\n<div class='amazing-card-label'>${amazingCards[i].short}</div>`;
             card.onclick = () => showAmazingModal(i);
             grid.appendChild(card);
         }
