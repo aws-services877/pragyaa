@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Beautiful! 🎉</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Quicksand', Arial, sans-serif;
+            background: linear-gradient(120deg, #a1c4fd 0%, #fbc2eb 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Animated SVG Balloons */
+        .svg-floating {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .balloon-svg {
+            position: absolute;
+            width: 70px;
+            height: 120px;
+            opacity: 0.85;
+            animation: floatBalloon 8s ease-in-out infinite;
+            cursor: pointer;
+            transition: filter 0.2s, opacity 0.2s;
+            pointer-events: auto;
+        }
+        .balloon-svg:active {
+            filter: brightness(1.2) drop-shadow(0 0 24px #fff8);
+        }
+        .balloon-svg.burst {
+            animation: burstPop 0.35s cubic-bezier(.7,-0.2,.8,1.5) forwards;
+            pointer-events: none;
+        }
+        @keyframes burstPop {
+            0% { opacity: 1; transform: scale(1) rotate(0deg); }
+            60% { opacity: 1; transform: scale(1.15) rotate(8deg); }
+            80% { opacity: 0.8; transform: scale(0.7) rotate(-12deg); }
+            100% { opacity: 0; transform: scale(0.1) rotate(0deg); }
+        }
+        .balloon-svg.blue { filter: drop-shadow(0 0 12px #87ceeb88); }
+        .balloon-svg.pink { filter: drop-shadow(0 0 12px #ffb6c188); }
+        .balloon-svg.red { filter: drop-shadow(0 0 12px #ff767588); }
+        .balloon-svg:nth-child(1) { left: 8vw; top: 60vh; animation-delay: 0s; }
+        .balloon-svg:nth-child(2) { left: 20vw; top: 30vh; animation-delay: 2s; }
+        .balloon-svg:nth-child(3) { left: 40vw; top: 70vh; animation-delay: 1s; }
+        .balloon-svg:nth-child(4) { left: 60vw; top: 20vh; animation-delay: 3s; }
+        .balloon-svg:nth-child(5) { left: 80vw; top: 50vh; animation-delay: 1.5s; }
+        @keyframes floatBalloon {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-60px) scale(1.05); }
+        }
+        .heart-svg {
+            position: absolute;
+            opacity: 0.92;
+            animation: floatHeart 10s ease-in-out infinite;
+            cursor: pointer;
+            transition: filter 0.2s, opacity 0.2s;
+            pointer-events: auto;
+        }
+        .heart-svg:active {
+            filter: brightness(1.2) drop-shadow(0 0 24px #fff8);
+        }
+        .heart-svg.break .left-half {
+            animation: breakLeft 0.6s forwards;
+        }
+        .heart-svg.break .right-half {
+            animation: breakRight 0.6s forwards;
+        }
+        .heart-svg.break {
+            pointer-events: none;
+        }
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            25% { transform: translateY(-20px) scale(1.05) rotate(-5deg); }
+            50% { transform: translateY(-40px) scale(1.1) rotate(5deg); }
+            75% { transform: translateY(-20px) scale(1.05) rotate(-5deg); }
+        }
+        @keyframes breakLeft {
+            0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+            60% { opacity: 1; transform: translate(-10px,-10px) rotate(-15deg) scale(1.1); }
+            100% { opacity: 0; transform: translate(-40px,-40px) rotate(-30deg) scale(0.7); }
+        }
+        @keyframes breakRight {
+            0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+            60% { opacity: 1; transform: translate(10px,-10px) rotate(15deg) scale(1.1); }
+            100% { opacity: 0; transform: translate(40px,-40px) rotate(30deg) scale(0.7); }
+        }
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: #ff69b4;
+            text-shadow: 2px 2px 8px #fbc2eb88;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #4169e1;
+            font-weight: 700;
+            font-family: 'Quicksand', Arial, sans-serif;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: #ff69b4;
+            transform: scale(1.1);
+        }
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            background: linear-gradient(120deg, #fbc2ebcc 0%, #a1c4fdcc 100%);
+            backdrop-filter: blur(12px);
+            padding: 70px 40px 60px 40px;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.13);
+            border: 3px solid #fbc2eb88;
+            animation: fadeIn 1.5s cubic-bezier(.39,.575,.56,1.000) both;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5rem;
+            color: #4169e1;
+            margin-bottom: 18px;
+            text-shadow: 0 0 18px #fbc2eb88, 0 2px 8px #87ceeb44;
+            animation: glow 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 18px #fbc2eb88, 0 2px 8px #87ceeb44; }
+            100% { text-shadow: 0 0 32px #ffb6c1cc, 0 2px 18px #87ceeb99; }
+        }
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-style: italic;
+            font-family: 'Quicksand', Arial, sans-serif;
+        }
+        .birthday-message {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            background: linear-gradient(90deg, #fbc2eb33, #a1c4fd33);
+            border-radius: 18px;
+            padding: 18px 10px;
+            box-shadow: 0 2px 12px #fbc2eb22;
+        }
+        .cake-button {
+            display: inline-block;
+            padding: 18px 38px;
+            background: linear-gradient(45deg, #ff69b4, #87ceeb);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px #ffb6c1aa;
+            font-family: 'Quicksand', Arial, sans-serif;
+        }
+        .cake-button:hover {
+            transform: translateY(-3px) scale(1.07);
+            box-shadow: 0 10px 30px #ffb6c1cc;
+        }
+        /* Memories Section */
+        .memories {
+            padding: 100px 0 80px 0;
+            background: linear-gradient(120deg, #fbc2eb88 0%, #a1c4fd88 100%);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 2;
+        }
+        .memories h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff69b4;
+            margin-bottom: 50px;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 0 2px 8px #fbc2eb55;
+        }
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 36px;
+        }
+        .memory-card {
+            background: linear-gradient(120deg, #fbc2ebcc 0%, #a1c4fdcc 100%);
+            backdrop-filter: blur(8px);
+            padding: 32px 24px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px #a1c4fd22;
+            transition: all 0.3s;
+            border: 2.5px solid #fbc2eb44;
+        }
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 50px #a1c4fd44;
+            border-color: #ff69b4;
+        }
+        .memory-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+        }
+        .memory-card h3 {
+            font-size: 1.3rem;
+            color: #4169e1;
+            margin-bottom: 10px;
+            font-family: 'Quicksand', Arial, sans-serif;
+        }
+        .memory-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        /* Birthday Wishes */
+        .wishes {
+            padding: 90px 0 80px 0;
+            background: linear-gradient(135deg, #fbc2eb88, #a1c4fd88);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 2;
+        }
+        .wishes h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff69b4;
+            margin-bottom: 50px;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 0 2px 8px #fbc2eb55;
+        }
+        .wish-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .birthday-wish {
+            background: linear-gradient(120deg, #fbc2ebcc 0%, #a1c4fdcc 100%);
+            backdrop-filter: blur(8px);
+            padding: 38px 24px;
+            border-radius: 22px;
+            box-shadow: 0 15px 35px #a1c4fd22;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333;
+            border: 2.5px solid #ffd93d55;
+            position: relative;
+            overflow: hidden;
+        }
+        .birthday-wish .quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #ff69b4;
+            margin-bottom: 18px;
+        }
+        /* Interactive Elements */
+        .interactive-section {
+            padding: 90px 0 80px 0;
+            background: linear-gradient(120deg, #fbc2eb88 0%, #a1c4fd88 100%);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .interactive-section h2 {
+            font-size: 2.5rem;
+            color: #ff69b4;
+            margin-bottom: 36px;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 0 2px 8px #fbc2eb55;
+        }
+        .birthday-cake {
+            font-size: 7rem;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            filter: drop-shadow(0 0 12px #fbc2eb88);
+        }
+        .birthday-cake:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 10px 20px #a1c4fd88);
+        }
+        .blow-candles {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #6bcf7f, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            font-family: 'Quicksand', Arial, sans-serif;
+        }
+        .blow-candles:hover {
+            transform: scale(1.08);
+            box-shadow: 0 5px 15px #4ecdc488;
+        }
+        /* Footer */
+        footer {
+            background: linear-gradient(45deg, #a1c4fdcc, #fbc2ebcc);
+            backdrop-filter: blur(6px);
+            color: #4169e1;
+            text-align: center;
+            padding: 40px 0 30px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-message {
+            font-size: 1.3rem;
+            margin-bottom: 18px;
+            font-family: 'Pacifico', cursive;
+        }
+        .hearts {
+            font-size: 2rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.2rem; }
+            .memories h2, .wishes h2, .interactive-section h2 { font-size: 1.5rem; }
+            .birthday-cake { font-size: 4rem; }
+            .memories-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 8px; }
+            .hero-content { padding: 30px 8px; border-radius: 18px; }
+            .memories, .wishes, .interactive-section { padding: 40px 0 30px 0; }
+        }
+        .snackbar {
+            visibility: hidden;
+            min-width: 220px;
+            background: linear-gradient(90deg, #111a2f 0%, #264b7a 100%);
+            color: #fff;
+            text-align: center;
+            border-radius: 30px;
+            padding: 18px 32px;
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            z-index: 20000;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', Arial, sans-serif;
+            box-shadow: 0 4px 24px #264b7a99, 0 0 0 2px #264b7a;
+            border: 1.5px solid #264b7a;
+            opacity: 0;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        .snackbar.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .scroll-hint {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 12000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(17,26,47,0.85);
+            border-radius: 18px;
+            padding: 16px 10px 16px 10px;
+            box-shadow: 0 2px 16px #264b7a55;
+            color: #fff;
+            font-family: 'Quicksand', Arial, sans-serif;
+                font-size: 1.1rem;
+            opacity: 0.92;
+            transition: opacity 0.5s;
+        }
+        .scroll-hint .arrow {
+            font-size: 2.2rem;
+            margin-bottom: 6px;
+            animation: bounceArrow 1.2s infinite;
+        }
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        @media (max-width: 700px) {
+            .scroll-hint { display: none; }
+        }
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw; height: 100vh;
+            background: linear-gradient(120deg, #111a2f 0%, #264b7a 50%, #fbc2eb 100%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            opacity: 1;
+            transition: opacity 1s;
+        }
+        .loading-progress-bar-bg {
+            width: 260px;
+            height: 14px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 8px;
+            margin-top: 32px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px #264b7a33;
+        }
+        .loading-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #87ceeb, #ff69b4);
+            border-radius: 8px;
+            transition: width 0.2s;
+        }
+        .loading-videos-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .loading-bg-video {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: cover;
+            opacity: 0.45;
+            z-index: 1;
+        }
+        /* (overlay removed) */
+        .loading-spinner, .loading-progress-bar-bg, .loading-spinner + div, .loading-progress-bar-bg {
+            z-index: 3;
+            position: relative;
+        }
+        .loading-bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: contain;
+            background: #111a2f;
+            z-index: 1;
+        }
+        .skip-loading-btn {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+            z-index: 10;
+            background: linear-gradient(90deg, #111a2f 0%, #264b7a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 10px 26px;
+            font-size: 1.1rem;
+            font-family: 'Quicksand', Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #264b7a55;
+            opacity: 0.92;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .skip-loading-btn:hover {
+            background: linear-gradient(90deg, #264b7a 0%, #111a2f 100%);
+            opacity: 1;
+        }
+        .amazing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        .amazing-card {
+            cursor: pointer;
+            min-height: 220px;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px #a1c4fd33;
+            background: #fff;
+            transition: transform 0.18s cubic-bezier(.4,2,.3,1), box-shadow 0.18s;
+            position: relative;
+        }
+        .amazing-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 22px;
+            display: block;
+        }
+        .amazing-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 40px #a1c4fd55;
+        }
+        .amazing-card-label {
+            display: none;
+        }
+        /* Modal styles */
+        .amazing-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(30,40,60,0.85);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .amazing-modal-content {
+            background: #fff;
+            border-radius: 28px;
+            padding: 36px 28px 28px 28px;
+            box-shadow: 0 8px 40px #a1c4fd55;
+            max-width: 420px;
+            width: 90vw;
+            text-align: center;
+            position: relative;
+            animation: amazingModalIn 0.5s cubic-bezier(.4,2,.3,1);
+        }
+        @keyframes amazingModalIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .amazing-modal-content img {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            background: #111a2f;
+        }
+        .amazing-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #4169e1;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .amazing-modal-content { padding: 18px 4px 18px 4px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">💅 Slay Gurl 💅</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#amazing">DUMP</a></li>
+                <li><a href="#wishes">Wishes</a></li>
+                <li><a href="#celebrate">Celebrate</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Happy Birthday Beautiful! 🎉</h1>
+            <p class="subtitle">Today is all about YOU,Pragyaa! ✨</p>
+            <div class="birthday-message">
+                Another year of being absolutely amazing! 🌟<br>
+                Hope your special day is filled with joy, laughter, and all your favorite things! 💕
+            </div>
+            <a href="#celebrate" class="cake-button">🎂 Let's Celebrate! 🎂</a>
+        </div>
+    </section>
+
+    <section id="amazing" class="memories">
+        <div class="container">
+            <h2>What Makes You Amazing ✨</h2>
+            <div class="amazing-grid">
+                <!-- 9 cards, each with front/back images and text -->
+            </div>
+            <div id="amazing-modal" class="amazing-modal" style="display:none;">
+                <div class="amazing-modal-content">
+                    <button class="amazing-modal-close" onclick="closeAmazingModal()">&times;</button>
+                    <img id="amazing-modal-img" src="" alt="" />
+                    <h3 id="amazing-modal-title"></h3>
+                    <p id="amazing-modal-text"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wishes" class="wishes">
+        <div class="container">
+            <h2>Birthday Wishes 🎁</h2>
+            <div class="wish-container">
+                <div class="birthday-wish">
+                    <div class="quote">"May your birthday be the start of a year filled with good luck, good health, and much happiness." 🍀</div>
+                    <p>On your special day, I wish you all the happiness in the world! May this new year of your life bring you countless moments of joy, exciting adventures, and dreams coming true. You deserve all the wonderful things life has to offer!</p>
+                    <br>
+                    <p>Here's to another year of being fabulous, fierce, and absolutely incredible! 🥳✨</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="celebrate" class="interactive-section">
+        <div class="container">
+            <h2>Make a Wish! 🕯️</h2>
+            <div class="birthday-cake" onclick="celebrateBirthday()">🎂</div>
+            <br>
+            <button class="blow-candles" onclick="blowCandles()">🌬️ Blow Out the Candles! 🌬️</button>
+            <div id="celebration-message" style="margin-top: 20px; font-size: 1.5rem; color: #ff6b6b;"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-message">
+                Wishing you the happiest of birthdays! 🎉
+            </div>
+            <div class="hearts">💕 💖 💕 💖 💕</div>
+            <p>WObviosuly yaar made with love</p>
+        </div>
+    </footer>
+
+    <!-- SVG Floating Elements (balloons + hearts) -->
+    <div class="svg-floating">
+        <!-- Balloon 1: Blue -->
+        <svg class="balloon-svg blue" style="left: 10vw; top: 60vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="blueGrad1" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#87ceeb"/>
+                    <stop offset="100%" stop-color="#4682b4"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#blueGrad1)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.25"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#b0c4de"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#b0c4de" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Balloon 2: Blue -->
+        <svg class="balloon-svg blue" style="left: 70vw; top: 30vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="blueGrad2" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#87ceeb"/>
+                    <stop offset="100%" stop-color="#4682b4"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#blueGrad2)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.25"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#b0c4de"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#b0c4de" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Balloon 3: Pink -->
+        <svg class="balloon-svg pink" style="left: 25vw; top: 20vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="pinkGrad1" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#ffb6c1"/>
+                    <stop offset="100%" stop-color="#ff69b4"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#pinkGrad1)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.25"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#ff69b4"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#ff69b4" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Balloon 4: Pink -->
+        <svg class="balloon-svg pink" style="left: 55vw; top: 70vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="pinkGrad2" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#ffb6c1"/>
+                    <stop offset="100%" stop-color="#ff69b4"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#pinkGrad2)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.25"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#ff69b4"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#ff69b4" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Balloon 5: Red -->
+        <svg class="balloon-svg red" style="left: 35vw; top: 50vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="redGrad1" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#ff7675"/>
+                    <stop offset="100%" stop-color="#d63031"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#redGrad1)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.22"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#d63031"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#d63031" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Balloon 6: Red -->
+        <svg class="balloon-svg red" style="left: 80vw; top: 60vh; width: 90px; height: 150px;" viewBox="0 0 60 120" onclick="burstBalloon(this)">
+            <defs>
+                <radialGradient id="redGrad2" cx="60%" cy="40%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#ff7675"/>
+                    <stop offset="100%" stop-color="#d63031"/>
+                </radialGradient>
+            </defs>
+            <ellipse cx="30" cy="50" rx="28" ry="40" fill="url(#redGrad2)"/>
+            <ellipse cx="22" cy="38" rx="7" ry="12" fill="#fff" opacity="0.22"/>
+            <rect x="27" y="90" width="6" height="20" rx="3" fill="#d63031"/>
+            <path d="M30 110 Q32 115 28 120" stroke="#d63031" stroke-width="2" fill="none"/>
+        </svg>
+        <!-- Heart 1 -->
+        <svg class="heart-svg blue" style="left: 15vw; top: 20vh; width: 60px; height: 60px;" viewBox="0 0 60 60" onclick="breakHeart(this)">
+            <defs>
+                <linearGradient id="blueHeartGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a1c4fd"/>
+                    <stop offset="100%" stop-color="#4682b4"/>
+                </linearGradient>
+            </defs>
+            <g class="left-half">
+                <path d="M30 52 C30 44,10 35,10 22 C10 10,30 10,30 22 Z" fill="url(#blueHeartGrad1)"/>
+            </g>
+            <g class="right-half">
+                <path d="M30 52 C30 44,50 35,50 22 C50 10,30 10,30 22 Z" fill="url(#blueHeartGrad1)"/>
+            </g>
+        </svg>
+        <!-- Heart 2 -->
+        <svg class="heart-svg pink" style="left: 70vw; top: 60vh; width: 70px; height: 70px;" viewBox="0 0 60 60" onclick="breakHeart(this)">
+            <defs>
+                <linearGradient id="pinkHeartGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fbc2eb"/>
+                    <stop offset="100%" stop-color="#ff69b4"/>
+                </linearGradient>
+            </defs>
+            <g class="left-half">
+                <path d="M30 52 C30 44,10 35,10 22 C10 10,30 10,30 22 Z" fill="url(#pinkHeartGrad1)"/>
+            </g>
+            <g class="right-half">
+                <path d="M30 52 C30 44,50 35,50 22 C50 10,30 10,30 22 Z" fill="url(#pinkHeartGrad1)"/>
+            </g>
+        </svg>
+        <!-- Heart 3 -->
+        <svg class="heart-svg blue" style="left: 40vw; top: 10vh; width: 50px; height: 50px;" viewBox="0 0 60 60" onclick="breakHeart(this)">
+            <defs>
+                <linearGradient id="blueHeartGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#87ceeb"/>
+                    <stop offset="100%" stop-color="#4169e1"/>
+                </linearGradient>
+            </defs>
+            <g class="left-half">
+                <path d="M30 52 C30 44,10 35,10 22 C10 10,30 10,30 22 Z" fill="url(#blueHeartGrad2)"/>
+            </g>
+            <g class="right-half">
+                <path d="M30 52 C30 44,50 35,50 22 C50 10,30 10,30 22 Z" fill="url(#blueHeartGrad2)"/>
+            </g>
+        </svg>
+        <!-- Heart 4 -->
+        <svg class="heart-svg pink" style="left: 60vw; top: 30vh; width: 60px; height: 60px;" viewBox="0 0 60 60" onclick="breakHeart(this)">
+            <defs>
+                <linearGradient id="pinkHeartGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffb6c1"/>
+                    <stop offset="100%" stop-color="#fbc2eb"/>
+                </linearGradient>
+            </defs>
+            <g class="left-half">
+                <path d="M30 52 C30 44,10 35,10 22 C10 10,30 10,30 22 Z" fill="url(#pinkHeartGrad2)"/>
+            </g>
+            <g class="right-half">
+                <path d="M30 52 C30 44,50 35,50 22 C50 10,30 10,30 22 Z" fill="url(#pinkHeartGrad2)"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Snackbar for balloon multiplication -->
+    <div id="snackbar" class="snackbar">Uh uhnn Pragya likes em!!!</div>
+
+    <div class="scroll-hint" id="scrollHint">
+        <div class="arrow">⬇️</div>
+        <div>Scroll</div>
+    </div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <button id="skipLoadingBtn" class="skip-loading-btn" type="button">Skip</button>
+        <div class="loading-videos-bg">
+            <img id="loadingBgImage" class="loading-bg-image" src="assets/pragya-sooot.jpg" style="display:none;" />
+            <video id="loadingBgVideoA" class="loading-bg-video" muted playsinline style="display:none;"></video>
+            <video id="loadingBgVideoB" class="loading-bg-video" muted playsinline style="display:none;"></video>
+        </div>
+        <div id="loadingMessage">Getting the party ready...</div>
+        <div class="loading-progress-bar-bg">
+            <div class="loading-progress-bar" id="loadingProgressBar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Balloon burst effect
+        let snackbarTimeout = null;
+        function burstBalloon(el) {
+            // Show snackbar and reset timer on every burst
+            showSnackbar();
+            // Get position for confetti effect
+            const rect = el.getBoundingClientRect();
+            const burstX = rect.left + rect.width / 2;
+            const burstY = rect.top + rect.height / 2;
+            el.classList.add('burst');
+            // Confetti burst at location (optional)
+            confettiAt(burstX, burstY);
+            setTimeout(() => {
+                el.remove();
+                createRandomBalloons(2);
+            }, 350);
+        }
+
+        function showSnackbar() {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.classList.add('show');
+            if (snackbarTimeout) clearTimeout(snackbarTimeout);
+            snackbarTimeout = setTimeout(() => {
+                snackbar.classList.remove('show');
+                snackbarTimeout = null;
+            }, 3000);
+        }
+
+        function hideSnackbar() {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.classList.remove('show');
+        }
+
+        function checkBalloonsAndSnackbar() {
+            // If there are no more balloons, hide the snackbar
+            const balloons = document.querySelectorAll('.balloon-svg');
+            if (balloons.length === 0) {
+                hideSnackbar();
+            }
+        }
+
+        // Confetti burst at a specific (x, y) position
+        function confettiAt(x, y) {
+            for (let i = 0; i < 18; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.position = 'fixed';
+                conf.style.left = x + 'px';
+                conf.style.top = y + 'px';
+                conf.style.width = '8px';
+                conf.style.height = '8px';
+                conf.style.background = i%2===0 ? '#87ceeb' : '#ff69b4';
+                conf.style.borderRadius = '50%';
+                conf.style.zIndex = 10001;
+                const angle = Math.random() * 2 * Math.PI;
+                const dist = 40 + Math.random() * 40;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist;
+                conf.style.transition = 'all 0.7s cubic-bezier(.7,-0.2,.8,1.5)';
+                document.body.appendChild(conf);
+                setTimeout(() => {
+                    conf.style.transform = `translate(${dx}px, ${dy}px) scale(0.7)`;
+                    conf.style.opacity = 0;
+                }, 10);
+                setTimeout(() => conf.remove(), 800);
+            }
+        }
+
+        // Helper to create a random balloon SVG element
+        function createRandomBalloons(count) {
+            const container = document.querySelector('.svg-floating');
+            for (let i = 0; i < count; i++) {
+                // Randomize color
+                const colorRand = Math.random();
+                let colorClass, gradStops, stringColor;
+                if (colorRand < 0.33) {
+                    colorClass = 'blue';
+                    gradStops = [
+                        { offset: '0%', color: '#fff', opacity: '0.7' },
+                        { offset: '60%', color: '#87ceeb' },
+                        { offset: '100%', color: '#4682b4' }
+                    ];
+                    stringColor = '#b0c4de';
+                } else if (colorRand < 0.66) {
+                    colorClass = 'pink';
+                    gradStops = [
+                        { offset: '0%', color: '#fff', opacity: '0.7' },
+                        { offset: '60%', color: '#ffb6c1' },
+                        { offset: '100%', color: '#ff69b4' }
+                    ];
+                    stringColor = '#ff69b4';
+                } else {
+                    colorClass = 'red';
+                    gradStops = [
+                        { offset: '0%', color: '#fff', opacity: '0.7' },
+                        { offset: '60%', color: '#ff7675' },
+                        { offset: '100%', color: '#d63031' }
+                    ];
+                    stringColor = '#d63031';
+                }
+                // Randomize position and size
+                const left = Math.floor(Math.random() * 90); // vw
+                const top = Math.floor(Math.random() * 80); // vh
+                const width = 70 + Math.floor(Math.random() * 50); // px
+                const height = 120 + Math.floor(Math.random() * 60); // px
+                // Unique gradient id
+                const gradId = colorClass + '-grad-' + Math.random().toString(36).substr(2, 6);
+                // SVG markup
+                let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', `balloon-svg ${colorClass}`);
+                svg.setAttribute('style', `left: ${left}vw; top: ${top}vh; width: ${width}px; height: ${height}px;`);
+                svg.setAttribute('viewBox', '0 0 60 120');
+                svg.setAttribute('onclick', 'burstBalloon(this)');
+                // SVG content
+                let defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                let radialGradient = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient');
+                radialGradient.setAttribute('id', gradId);
+                radialGradient.setAttribute('cx', '60%');
+                radialGradient.setAttribute('cy', '40%');
+                radialGradient.setAttribute('r', '70%');
+                gradStops.forEach(stop => {
+                    let s = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+                    s.setAttribute('offset', stop.offset);
+                    s.setAttribute('stop-color', stop.color);
+                    if (stop.opacity) s.setAttribute('stop-opacity', stop.opacity);
+                    radialGradient.appendChild(s);
+                });
+                defs.appendChild(radialGradient);
+                svg.appendChild(defs);
+                // Balloon ellipse
+                let ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+                ellipse.setAttribute('cx', '30');
+                ellipse.setAttribute('cy', '50');
+                ellipse.setAttribute('rx', '28');
+                ellipse.setAttribute('ry', '40');
+                ellipse.setAttribute('fill', `url(#${gradId})`);
+                svg.appendChild(ellipse);
+                // Highlight
+                let highlight = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+                highlight.setAttribute('cx', '22');
+                highlight.setAttribute('cy', '38');
+                highlight.setAttribute('rx', '7');
+                highlight.setAttribute('ry', '12');
+                highlight.setAttribute('fill', '#fff');
+                highlight.setAttribute('opacity', '0.22');
+                svg.appendChild(highlight);
+                // String
+                let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', '27');
+                rect.setAttribute('y', '90');
+                rect.setAttribute('width', '6');
+                rect.setAttribute('height', '20');
+                rect.setAttribute('rx', '3');
+                rect.setAttribute('fill', stringColor);
+                svg.appendChild(rect);
+                let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', 'M30 110 Q32 115 28 120');
+                path.setAttribute('stroke', stringColor);
+                path.setAttribute('stroke-width', '2');
+                path.setAttribute('fill', 'none');
+                svg.appendChild(path);
+                // Add to container
+                container.appendChild(svg);
+            }
+            // After creating, check if snackbar should be visible
+            checkBalloonsAndSnackbar();
+        }
+
+        // Heart break effect
+        function breakHeart(el) {
+            el.classList.add('break');
+            setTimeout(() => {
+                el.remove();
+            }, 600);
+        }
+
+        // Birthday celebration function
+        function celebrateBirthday() {
+            const cake = document.querySelector('.birthday-cake');
+            cake.style.transform = 'scale(1.5) rotate(360deg)';
+            confettiAt(window.innerWidth/2, window.innerHeight/2);
+            
+            setTimeout(() => {
+                cake.style.transform = 'scale(1) rotate(0deg)';
+            }, 1000);
+        }
+
+        // Blow candles function
+        function blowCandles() {
+            const message = document.getElementById('celebration-message');
+            const cake = document.querySelector('.birthday-cake');
+            
+            cake.innerHTML = '🎂';
+            message.innerHTML = '🎉 Happy Birthday! Your wish will come true! 🎉';
+            confettiAt(window.innerWidth/2, window.innerHeight/2);
+            
+            setTimeout(() => {
+                message.innerHTML = '✨ May all your dreams come true this year! ✨';
+            }, 3000);
+        }
+
+        // Auto-create confetti every 10 seconds
+        setInterval(confettiAt, 10000, window.innerWidth/2, window.innerHeight/2);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add sparkles randomly
+        function addSparkles() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        setInterval(addSparkles, 1000);
+
+        // Initial confetti on page load
+        window.addEventListener('load', () => {
+            setTimeout(confettiAt, 1000, window.innerWidth/2, window.innerHeight/2);
+        });
+
+        // Hide scroll hint after user scrolls
+        let scrollHint = document.getElementById('scrollHint');
+        let scrollHintTimeout = null;
+        function hideScrollHint() {
+            if (scrollHint) {
+                scrollHint.style.opacity = 0;
+                setTimeout(() => { scrollHint.style.display = 'none'; }, 600);
+            }
+        }
+        window.addEventListener('scroll', function onScrollHint() {
+            if (scrollHint && scrollHint.style.opacity !== '0') {
+                hideScrollHint();
+                window.removeEventListener('scroll', onScrollHint);
+            }
+        });
+        // Optionally, auto-hide after 7 seconds if not scrolled
+        scrollHintTimeout = setTimeout(hideScrollHint, 7000);
+
+        // Seamless video transitions with preloading
+        (function() {
+            const videoFiles = [
+                'assets/pragya-bangles.mp4',
+                'assets/pragya-attitude.mp4',
+                'assets/pragya-navishka-cut.mp4'
+            ];
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            const shuffled1 = shuffle(videoFiles.slice());
+            const shuffled2 = shuffle(videoFiles.slice());
+            const playlist = shuffled1.concat(shuffled2); // Each video twice, random order
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.getElementById('loadingProgressBar');
+            const bgImage = document.getElementById('loadingBgImage');
+            const videoA = document.getElementById('loadingBgVideoA');
+            const videoB = document.getElementById('loadingBgVideoB');
+            let current = -1; // -1 means show image
+            let loadingDone = false;
+            let start = null;
+            // Set total loading time: 3s for image + 9s for each of the 3 videos, played twice = 21s
+            const maxTime = 21000;
+            let progressTimeout = null;
+            let activeVideo = videoA, preloadVideo = videoB;
+            function showImageThenVideos() {
+                bgImage.style.display = '';
+                videoA.style.display = 'none';
+                videoB.style.display = 'none';
+                setTimeout(() => {
+                    bgImage.style.display = 'none';
+                    current = 0;
+                    playNextVideo();
+                }, 3000); // 3s for image
+            }
+            function playNextVideo() {
+                if (current >= playlist.length) {
+                    finishLoading();
+                    return;
+                }
+                [activeVideo, preloadVideo] = [preloadVideo, activeVideo];
+                activeVideo.src = playlist[current];
+                activeVideo.load();
+                activeVideo.style.display = '';
+                preloadVideo.style.display = 'none';
+                // Preload next video if any
+                if (current + 1 < playlist.length) {
+                    preloadVideo.src = playlist[current + 1];
+                    preloadVideo.load();
+                }
+                // Play and handle end
+                activeVideo.play().catch(() => {
+                    current++;
+                    playNextVideo();
+                });
+                activeVideo.onended = function() {
+                    current++;
+                    playNextVideo();
+                };
+                // Fallback: skip to next after 9s per video
+                activeVideo.onloadedmetadata = function() {
+                    if (progressTimeout) clearTimeout(progressTimeout);
+                    progressTimeout = setTimeout(() => {
+                        current++;
+                        playNextVideo();
+                    }, 9000);
+                };
+            }
+            function finishLoading() {
+                if (!loadingDone) {
+                    loadingDone = true;
+                    progressBar.style.width = '100%';
+                    loadingScreen.style.opacity = 0;
+                    setTimeout(() => loadingScreen.style.display = 'none', 1200);
+                }
+            }
+            function animateBar(ts) {
+                if (!start) start = ts;
+                let elapsed = ts - start;
+                let percent = Math.min(1, elapsed / maxTime);
+                progressBar.style.width = (percent * 100) + '%';
+                if (percent < 1 && !loadingDone) {
+                    requestAnimationFrame(animateBar);
+                }
+            }
+            requestAnimationFrame(animateBar);
+            showImageThenVideos();
+            setTimeout(finishLoading, maxTime);
+
+            // Skip button logic
+            const skipBtn = document.getElementById('skipLoadingBtn');
+            skipBtn.onclick = function() {
+                finishLoading();
+            };
+            // Make sure skip button is only visible while loading
+            setTimeout(() => { if (!loadingDone) skipBtn.style.display = 'none'; }, maxTime + 1500);
+
+            setTimeout(() => {
+                const msg = document.getElementById('loadingMessage');
+                if (msg) msg.textContent = 'Kabada laptop , GAREEEEEB'
+            }, 2000);
+        })();
+
+    // Amazing section card data
+    const amazingCards = [
+        { short: 'Your Smile', long: 'The way you light up every room you enter. Your smile is contagious and brings joy to everyone around you!' },
+        { short: 'Your Laughter', long: 'Those moments when you laugh so hard you can barely breathe - they are the best moments of all!' },
+        { short: 'Your Kindness', long: 'The way you DONT CARE , NEVER know the right thing to say and HOW RUDELY YOU TALK. You have such a beautiful heart tho!' },
+        { short: 'Your Dreams', long: 'Pdhle bhaiiii , unplaced reh jayegiii😭😭😭😭😭😭😭 ,work hard bhaiiii ' },
+        { short: 'Your Style', long: 'You have a unique sense of style that makes you stand out in the best way possible.Forget your Insecurities , there is no need to be insecure girl!' },
+        { short: 'Your Strength', long: 'No matter what life throws at you, you handle it with grace and strength. I wish you heal from the things you went through' },
+        { short: 'Your Energy', long: 'Your energy is infectious and makes every moment more fun and memorable.TBH you are lazy you cant do anything' },
+        { short: 'Your Wisdom', long: 'WISDOM?? SERIOUSLY YOU WANT TO READ ABOUT YOUR WISDOM?? YOU ARE DUMB AF YOUU SOO CLUMSYY YWWWR' },
+        { short: 'Your Behaviour', long: 'C-L-U-M-S-Y , chantt, boht tej , you aint' }
+    ];
+    // 18 images (front/back), skipping sooot, screenshot, small-cake
+    const amazingImages = [
+        'assets/pragya-stickervali.jpg',
+        'assets/pragya-laaljagah.jpg',
+        'assets/pragya-nilitopi.jpg',
+        'assets/pragya-fest2.jpg',
+        'assets/pragya-firsechorii.png',
+        'assets/pragya-firsechori.png',
+        'assets/pragya-doorhairandom.jpg',
+        'assets/pragya-dikhniri.jpg',
+        'assets/pragya-cutieee.jpg',
+        'assets/pragya-fest.jpg',
+        'assets/pragya-rude.jpg',
+        'assets/pragya-college2.jpg',
+        'assets/pragya-college.jpg',
+        'assets/pragya-random.jpg',
+        'assets/pragya-smarty.jpg',
+        'assets/pragya-gobhi.jpg',
+        'assets/pragya-illegal-pic.jpeg',
+        'assets/pragya-thief.jpeg'
+    ];
+    // Render cards
+    function renderAmazingCards() {
+        const grid = document.querySelector('.amazing-grid');
+        grid.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+            const img = amazingImages[i*2 % amazingImages.length];
+            const card = document.createElement('div');
+            card.className = 'amazing-card';
+            card.innerHTML = `<img src="${img}" alt="" />`;
+            card.onclick = () => showAmazingModal(i);
+            grid.appendChild(card);
+        }
+    }
+    // Modal logic
+    let amazingModalOpen = false;
+    function showAmazingModal(idx) {
+        amazingModalOpen = true;
+        const modal = document.getElementById('amazing-modal');
+        document.getElementById('amazing-modal-img').src = amazingImages[(idx*2+1)%amazingImages.length];
+        document.getElementById('amazing-modal-title').textContent = amazingCards[idx].short;
+        document.getElementById('amazing-modal-text').textContent = amazingCards[idx].long;
+        modal.style.display = 'flex';
+        setTimeout(() => { modal.classList.add('show'); }, 10);
+    }
+    function closeAmazingModal() {
+        const modal = document.getElementById('amazing-modal');
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            amazingModalOpen = false;
+        }, 300);
+    }
+    // Render on load
+    document.addEventListener('DOMContentLoaded', renderAmazingCards);
+    </script>
+</body>
+</html>
